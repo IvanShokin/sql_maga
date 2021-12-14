@@ -31,10 +31,11 @@ def getUserProjects(cur, user):
     return cur.execute(f"SELECT project_id FROM user_project WHERE user_id = {param}").fetchAll()
 
 
-def getProjectId(cur, project):
-    return cur.execute(f"SELECT id FROM project WHERE title = {project}").fetchone()
+def getProjectId(cur, name):
+    x = cur.execute(f"SELECT id FROM project WHERE title = ?", (name, )).fetchone()
+    return x
 
 
 def getProjectUsers(cur, project):
     param = getProjectId(cur, project)
-    return cur.execute(f"SELECT user_id FROM user_project WHERE project_id = {param}").fetchAll()
+    return cur.execute(f"SELECT user_id FROM user_project WHERE project_id = ?", param).fetchall()
