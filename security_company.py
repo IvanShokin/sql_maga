@@ -26,11 +26,10 @@ cur.execute("""CREATE TABLE IF NOT EXISTS project(
    access_level INTEGER);
 """)
 
-
 command = int(input('''
         1 - Добавить сотрудника
         2 - Создать проект
-        3 - Поулчить список сотрудников
+        3 - Поулучить список сотрудников
         4 - Получить список проектов
         5 - Информация о сотруднике
         6 - Информация о проекте
@@ -38,16 +37,20 @@ command = int(input('''
 '''))
 
 if command == 1:
-    pass
+	pass
 
 elif command == 2:
-    pass
+	pass
 
 elif command == 3:
-    cur.execute("SELECT * FROM users;")
-    three_results = cur.fetchmany(3)
-    print('\n'.join(three_results))
+	cur.execute("SELECT * FROM users;")
+	three_results = cur.fetchmany(3)
+	print('\n'.join(three_results))
+
 elif command == 4:
-    pass
+	pass
 
 conn.commit()
+
+
+
