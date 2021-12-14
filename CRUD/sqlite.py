@@ -15,11 +15,11 @@ def getListProjects(cur):
 
 
 def getUserInfo(cur, user):
-    return cur.execute("SELECT * FROM users WHERE f_name = user").fetch()
+    return cur.execute(f"SELECT * FROM users WHERE f_name = {user}").fetch()
 
 
 def getProjectInfo(cur, project):
-    return cur.execute("SELECT * FROM project WHERE title = project").fetch()
+    return cur.execute(f"SELECT * FROM project WHERE title = {project}").fetch()
 
 
 def getUserId(cur, user):
