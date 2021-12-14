@@ -42,7 +42,11 @@ def getProjectUsers(cur, project):
 
 
 def getUpdatedProjectUsers(cur, project):
-    all_elem = []
-    for note in getListProjects(cur, getProjectUsers(cur, project)):
-        all_elem.append(note)
-    return all_elem
+    all_id = getProjectUsers(cur, project)
+    response = []
+    for i in all_id:
+        response.append(cur.execute("SELECT title FROM project WHERE id = ?", i))
+    return response
+
+
+
