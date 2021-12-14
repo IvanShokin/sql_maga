@@ -11,30 +11,28 @@ import sqlite3
 conn = sqlite3.connect('staff.db')
 cur = conn.cursor()
 
-try:
-    cur.execute("""CREATE TABLE IF NOT EXISTS users(
-       id INT PRIMARY KEY AUTOINCREMENT NOT NULL,
-       f_name TEXT,
-       l_name TEXT,
-       gender TEXT,
-       age INTEGER);
-    """)
 
-    cur.execute("""CREATE TABLE IF NOT EXISTS project(
-       id INT PRIMARY KEY AUTOINCREMENT NOT NULL,
-       title TEXT,
-       description TEXT,
-       access_level INTEGER);
-    """)
+cur.execute("""CREATE TABLE IF NOT EXISTS users(
+   id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+   f_name TEXT,
+   l_name TEXT,
+   gender TEXT,
+   age INTEGER);
+""")
 
-    cur.execute("""CREATE TABLE users_project(
-       user_id  INT,
-       project_id INT,
-       FOREIGN KEY (user_id) REFERENCES users(id)
-       FOREIGN KEY (project_id) REFERENCES project(id));
-    """)
-except sqlite3.OperationalError:
-    print('Таблицы созданы')
+cur.execute("""CREATE TABLE IF NOT EXISTS project(
+   id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+   title TEXT,
+   description TEXT,
+   access_level INTEGER);
+""")
+
+cur.execute("""CREATE TABLE users_project(
+   user_id  INT,
+   project_id INT,
+   FOREIGN KEY (user_id) REFERENCES users(id)
+   FOREIGN KEY (project_id) REFERENCES project(id));
+""")
 
 while True:
     command = int(input('''
