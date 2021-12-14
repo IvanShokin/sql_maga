@@ -45,7 +45,7 @@ def getUpdatedProjectUsers(cur, project):
     all_id = getProjectUsers(cur, project)
     response = []
     for i in all_id:
-        response.append(cur.execute("SELECT title FROM project WHERE id = ?", i))
+        response.append(cur.execute("SELECT title FROM project WHERE id = ?", i).fetchone())
     return response
 
 
