@@ -15,7 +15,8 @@ cur.execute("""CREATE TABLE IF NOT EXISTS users(
    user_id INT PRIMARY KEY,
    f_name TEXT,
    l_name TEXT,
-   gender TEXT);
+   gender TEXT,
+   age INTEGER);
 """)
 
 cur.execute("""CREATE TABLE IF NOT EXISTS project(
@@ -31,6 +32,9 @@ command = int(input('''
         2 - Создать проект
         3 - Поулчить список сотрудников
         4 - Получить список проектов
+        5 - Информация о сотруднике
+        6 - Информация о проекте
+        7 - Сотрудники по должности
 '''))
 
 if command == 1:
