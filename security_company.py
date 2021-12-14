@@ -33,41 +33,47 @@ cur.execute("""CREATE TABLE users_project
    FOREIGN KEY (project_id) REFERENCES project(id));
 """)
 
-command = int(input('''
-        1 - Добавить сотрудника
-        2 - Создать проект
-        3 - Поулучить список сотрудников
-        4 - Получить список проектов
-        5 - Информация о сотруднике
-        6 - Информация о проекте
-        7 - Проекты сотрудника
-        8 - Сотрудники проекта
-'''))
+while True:
+    command = int(input('''
+    1 - Добавить сотрудника
+    2 - Создать проект
+    3 - Поулучить список сотрудников
+    4 - Получить список проектов
+    5 - Информация о сотруднике
+    6 - Информация о проекте
+    7 - Проекты сотрудника
+    8 - Сотрудники проекта
+    9 - Выйти
+    '''))
 
-if command == 1:
-    data = tuple(input('Введите Имя, Фамилию, Пол, Возраст через пробел: ').split())
-    createUser(cur, data)
-    print(f'Сотрудник {data[0]} добавлен')
-elif command == 2:
-    title = input('Введите название проекта: ')
-    description = input('Введите описание проекта: ')
-    createProject(cur, (title, description))
-    print(f'Проект {title} создан')
-elif command == 3:
-    for user in getListUsers(cur):
-        print(*user)
-elif command == 4:
-    for user in getListProjects(cur):
-        print(*user)
-elif command == 5:
-    name = input('Введите имя: ')
-    print(*getUserInfo(cur, name))
-elif command == 6:
-    title = input('Введите название проекта: ')
-    print(*getProjectInfo(cur, title))
-elif command == 7:
-    name = input('Введите имя: ')
-    print(getUserProjects(cur, name))
-elif command == 8:
-	print(getUserProjects(cur, name))
-conn.commit()
+    if command == 1:
+        data = tuple(input('Введите Имя, Фамилию, Пол, Возраст через пробел: ').split())
+        createUser(cur, data)
+        print(f'Сотрудник {data[0]} добавлен')
+    elif command == 2:
+        title = input('Введите название проекта: ')
+        description = input('Введите описание проекта: ')
+        createProject(cur, (title, description))
+        print(f'Проект {title} создан')
+    elif command == 3:
+        for user in getListUsers(cur):
+            print(*user)
+    elif command == 4:
+        for user in getListProjects(cur):
+            print(*user)
+    elif command == 5:
+        name = input('Введите имя: ')
+        print(*getUserInfo(cur, name))
+    elif command == 6:
+        title = input('Введите название проекта: ')
+        print(*getProjectInfo(cur, title))
+    elif command == 7:
+        name = input('Введите имя: ')
+        print(getUserProjects(cur, name))
+    elif command == 8:
+        title = input('Введите название проекта: ')
+        print(getProjectUsers(cur, title))
+    elif command == 9:
+        break
+
+    conn.commit()
