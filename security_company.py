@@ -11,27 +11,30 @@ import sqlite3
 conn = sqlite3.connect('staff.db')
 cur = conn.cursor()
 
-cur.execute("""CREATE TABLE IF NOT EXISTS users(
-   id INT PRIMARY KEY,
-   f_name TEXT,
-   l_name TEXT,
-   gender TEXT,
-   age INTEGER,);
-""")
+try:
+    cur.execute("""CREATE TABLE IF NOT EXISTS users(
+       id INT PRIMARY KEY AUTOINCREMENT NOT NULL,
+       f_name TEXT,
+       l_name TEXT,
+       gender TEXT,
+       age INTEGER);
+    """)
 
-cur.execute("""CREATE TABLE IF NOT EXISTS project(
-   id INT PRIMARY KEY,
-   title TEXT,
-   description TEXT,
-   access_level INTEGER,);
-""")
+    cur.execute("""CREATE TABLE IF NOT EXISTS project(
+       id INT PRIMARY KEY AUTOINCREMENT NOT NULL,
+       title TEXT,
+       description TEXT,
+       access_level INTEGER);
+    """)
 
-cur.execute("""CREATE TABLE users_project
-   user_id  INT,
-   project_id INT,
-   FOREIGN KEY (user_id) REFERENCES users(id)
-   FOREIGN KEY (project_id) REFERENCES project(id));
-""")
+    cur.execute("""CREATE TABLE users_project(
+       user_id  INT,
+       project_id INT,
+       FOREIGN KEY (user_id) REFERENCES users(id)
+       FOREIGN KEY (project_id) REFERENCES project(id));
+    """)
+except sqlite3.OperationalError:
+    print('Таблицы созданы')
 
 while True:
     command = int(input('''
@@ -53,7 +56,8 @@ while True:
     elif command == 2:
         title = input('Введите название проекта: ')
         description = input('Введите описание проекта: ')
-        createProject(cur, (title, description))
+        lvl = int(input('Уровень доступа: '))
+        createProject(cur, (title, description, lvl))
         print(f'Проект {title} создан')
     elif command == 3:
         for user in getListUsers(cur):

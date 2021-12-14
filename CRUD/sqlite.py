@@ -1,13 +1,13 @@
 def createUser(cur, data):
-    cur.execute("INSERT INTO users(f_name, l_name, gender, age) VALUES(?, ?, ?, ?, ?);", data)
+    cur.execute("INSERT INTO users(f_name, l_name, gender, age) VALUES(?, ?, ?, ?);", data)
 
 
 def createProject(cur, data):
-    cur.execute("INSERT INTO project(title, description, access_level) VALUES(?, ?, ?, ?);", data)
+    cur.execute("INSERT INTO project(title, description, access_level) VALUES(?, ?, ?);", data)
 
 
 def getListUsers(cur):
-    return cur.execute("SELECT user FROM users").fetchall()
+    return cur.execute("SELECT f_name FROM users").fetchall()
 
 
 def getListProjects(cur):
