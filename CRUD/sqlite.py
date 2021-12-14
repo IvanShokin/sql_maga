@@ -1,5 +1,3 @@
-
-
 def createUser(cur, data):
     cur.execute("INSERT INTO users(f_name, l_name, gender, age) VALUES(?, ?, ?, ?, ?);", data)
 
@@ -25,18 +23,18 @@ def getProjectInfo(cur, project):
 
 
 def getUserId(cur, user):
-	return cur.execute("SELECT id FROM users WHERE f_name = user").fetch()
+    return cur.execute(f"SELECT id FROM users WHERE f_name = {user}").fetch()
 
 
 def getUserProjects(cur, user):
-	user_id = getUserId(cur, user)
-	return cur.execute("SELECT project_id FROM user_project WHERE user_id = user_id").fetchAll()
+    user_id = getUserId(cur, user)
+    return cur.execute(f"SELECT project_id FROM user_project WHERE user_id = {user_id}").fetchAll()
 
 
 def getProjectId(cur, project):
-	return cur.execute("SELECT id FROM project WHERE title = project").fetch()
+    return cur.execute(f"SELECT id FROM project WHERE title = {project}").fetch()
 
 
 def getProjectUsers(cur, project):
-	project_id = getProjectId(cur, project)
-	return cur.execute("SELECT user_id FROM user_project WHERE project_id = project_id").fetchAll()
+    project_id = getProjectId(cur, project)
+    return cur.execute(f"SELECT user_id FROM user_project WHERE project_id = {project_id}").fetchAll()
