@@ -40,7 +40,8 @@ command = int(input('''
         4 - Получить список проектов
         5 - Информация о сотруднике
         6 - Информация о проекте
-        7 - Сотрудники по должности
+        7 - Проекты сотрудника
+        8 - Сотрудники проекта
 '''))
 
 if command == 1:
@@ -59,6 +60,11 @@ elif command == 4:
     for user in getListProjects(cur):
         print(*user)
 elif command == 5:
+	print(*getUserInfo(cur))
+elif command == 6:
+	print(*getProjectInfo(cur))
+elif command == 7:
+	pass
 
 
 conn.commit()
