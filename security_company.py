@@ -1,4 +1,4 @@
-from CRUD import sqlite
+from CRUD.sqlite import *
 import sqlite3
 
 # NULL — значение NULL
@@ -44,20 +44,19 @@ command = int(input('''
 '''))
 
 if command == 1:
-	pass
-
+    data = tuple(input('Введите Имя, Фамилию, Пол, Возраст через пробел: ').split())
+    createUser(cur, data)
+    print(f'Сотрудник {data[0]} добавлен')
 elif command == 2:
-	pass
-
+    title = input('Введите название проекта: ')
+    description = input('Введите описание проекта: ')
+    createProject(cur, (title, description))
+    print(f'Проект {title} создан')
 elif command == 3:
-	cur.execute("SELECT * FROM users;")
-	three_results = cur.fetchmany(3)
-	print('\n'.join(three_results))
-
+    for user in getListUsers(cur):
+        print(*user)
 elif command == 4:
-	pass
+    for user in getListProjects(cur):
+        print(*user)
 
 conn.commit()
-
-
-
