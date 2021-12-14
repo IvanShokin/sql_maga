@@ -23,12 +23,12 @@ def getProjectInfo(cur, project):
 
 
 def getUserId(cur, user):
-    return cur.execute(f"SELECT id FROM users WHERE f_name = {user}").fetchone()
+    return cur.execute(f"SELECT id FROM users WHERE f_name = ?", (user, )).fetchone()
 
 
 def getUserProjects(cur, user):
     param = getUserId(cur, user)
-    return cur.execute(f"SELECT project_id FROM user_project WHERE user_id = {param}").fetchAll()
+    return cur.execute(f"SELECT project_id FROM user_project WHERE user_id = ?", param).fetchAll()
 
 
 def getProjectId(cur, name):
@@ -39,3 +39,10 @@ def getProjectId(cur, name):
 def getProjectUsers(cur, project):
     param = getProjectId(cur, project)
     return cur.execute(f"SELECT user_id FROM user_project WHERE project_id = ?", param).fetchall()
+
+
+def getUpdatedProjectUsers(cur, project):
+    all_elem = []
+    for note in getListProjects(cur, getProjectUsers(cur, project)):
+        all_elem.append(note)
+    return all_elem
