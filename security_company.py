@@ -12,18 +12,25 @@ conn = sqlite3.connect('staff.db')
 cur = conn.cursor()
 
 cur.execute("""CREATE TABLE IF NOT EXISTS users(
-   user_id INT PRIMARY KEY,
+   id INT PRIMARY KEY,
    f_name TEXT,
    l_name TEXT,
    gender TEXT,
-   age INTEGER);
+   age INTEGER,);
 """)
 
 cur.execute("""CREATE TABLE IF NOT EXISTS project(
-   order_id INT PRIMARY KEY,
+   id INT PRIMARY KEY,
    title TEXT,
    description TEXT,
-   access_level INTEGER);
+   access_level INTEGER,);
+""")
+
+cur.execute("""CREATE TABLE users_project
+   user_id  INT,
+   project_id INT,
+   FOREIGN KEY (user_id) REFERENCES users(id)
+   FOREIGN KEY (project_id) REFERENCES project(id));
 """)
 
 
