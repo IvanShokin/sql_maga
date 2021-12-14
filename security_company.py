@@ -60,11 +60,14 @@ elif command == 4:
     for user in getListProjects(cur):
         print(*user)
 elif command == 5:
-	print(*getUserInfo(cur))
+    name = input('Введите имя: ')
+    print(*getUserInfo(cur, name))
 elif command == 6:
-	print(*getProjectInfo(cur))
+    title = input('Введите название проекта: ')
+    print(*getProjectInfo(cur, title))
 elif command == 7:
-	pass
-
-
+    name = input('Введите имя: ')
+    print(getUserProjects(cur, name))
+elif command == 8:
+	print(getUserProjects(cur, name))
 conn.commit()
