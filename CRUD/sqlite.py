@@ -29,8 +29,14 @@ def getUserId(cur, user):
 
 
 def getUserProjects(cur, user):
-	return cur.execute("SELECT project_id FROM user_project WHERE title = project").fetch()
+	user_id = getUserId(cur, user)
+	return cur.execute("SELECT project_id FROM user_project WHERE user_id = user_id").fetchAll()
 
 
 def getProjectId(cur, project):
 	return cur.execute("SELECT id FROM project WHERE title = project").fetch()
+
+
+def getProjectUsers(cur, project):
+	project_id = getProjectId(cur, project)
+	return cur.execute("SELECT user_id FROM user_project WHERE project_id = project_id").fetchAll()
