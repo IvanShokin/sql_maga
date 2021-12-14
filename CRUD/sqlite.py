@@ -11,13 +11,12 @@ def createProject(cur, data):
 
 
 def getListUsers(cur):
-    all_users = cur.execute("SELECT user FROM users").fetchall()
-    return all_users
+    return cur.execute("SELECT user FROM users").fetchall()
+
 
 
 def getListProjects(cur):
-    all_projects = cur.execute("SELECT title FROM projects").fetchall()
-    return all_projects
+    return cur.execute("SELECT title FROM projects").fetchall()
 
 
 
