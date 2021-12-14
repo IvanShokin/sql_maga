@@ -58,5 +58,7 @@ elif command == 3:
 elif command == 4:
     for user in getListProjects(cur):
         print(*user)
+elif command == 5:
+
 
 conn.commit()
