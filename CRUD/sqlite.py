@@ -1,5 +1,5 @@
 def createUser(cur, data):
-    cur.execute("INSERT INTO users(f_name, l_name, gender, age) VALUES(?, ?, ?, ?);", data)
+    cur.execute("INSERT INTO user(f_name, l_name, gender, age) VALUES(?, ?, ?, ?);", data)
 
 
 def createProject(cur, data):
@@ -7,7 +7,7 @@ def createProject(cur, data):
 
 
 def getListUsers(cur):
-    return cur.execute("SELECT f_name FROM users").fetchall()
+    return cur.execute("SELECT f_name FROM user").fetchall()
 
 
 def getListProjects(cur):
@@ -15,38 +15,41 @@ def getListProjects(cur):
 
 
 def getUserInfo(cur, user):
-    return cur.execute(f"SELECT * FROM users WHERE f_name = {user}").fetchone()
+    return cur.execute(f"SELECT * FROM user WHERE f_name = ?", (user, )).fetchone()
 
 
 def getProjectInfo(cur, project):
-    return cur.execute(f"SELECT * FROM project WHERE title = {project}").fetchone()
+    return cur.execute(f"SELECT * FROM project WHERE title = ?", (project, )).fetchone()
 
 
-def getUserId(cur, user):
-    return cur.execute(f"SELECT id FROM users WHERE f_name = ?", (user, )).fetchone()
+#######################################################################################################################
+def getUserId(cur, name):
+    return cur.execute(f"SELECT id FROM user WHERE f_name = ?", (name, )).fetchone()
 
 
-def getUserProjects(cur, user):
-    param = getUserId(cur, user)
-    return cur.execute(f"SELECT project_id FROM user_project WHERE user_id = ?", param).fetchAll()
+def getUserProjects(cur, project):
+    return cur.execute(f"SELECT project_id FROM user_project WHERE user_id = ?", getUserId(cur, project)).fetchall()
 
 
-def getProjectId(cur, name):
-    x = cur.execute(f"SELECT id FROM project WHERE title = ?", (name, )).fetchone()
-    return x
-
-
-def getProjectUsers(cur, project):
-    param = getProjectId(cur, project)
-    return cur.execute(f"SELECT user_id FROM user_project WHERE project_id = ?", param).fetchall()
-
-
-def getUpdatedProjectUsers(cur, project):
-    all_id = getProjectUsers(cur, project)
+def getNameUserProjects(cur, project):
     response = []
-    for i in all_id:
-        response.append(cur.execute("SELECT title FROM project WHERE id = ?", i).fetchone())
+    for id in getUserProjects(cur, project):
+        response.append(*cur.execute("SELECT title FROM project WHERE id = ?", id).fetchone())
     return response
 
 
+#######################################################################################################################
+def getProjectId(cur, name):
+    return cur.execute(f"SELECT id FROM project WHERE title = ?", (name, )).fetchone()
 
+
+def getProjectUsers(cur, project):
+    return cur.execute(f"SELECT user_id FROM user_project WHERE project_id = ?", getProjectId(cur, project)).fetchall()
+
+
+def getNameProjectUsers(cur, project):
+    response = []
+    for id in getProjectUsers(cur, project):
+        response.append(*cur.execute("SELECT f_name FROM user WHERE id = ?", id).fetchone())
+    return response
+#######################################################################################################################
